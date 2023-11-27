@@ -658,6 +658,82 @@ console.log(num); //1
 ## spread vs rest
 - 배열, 객체 , 함수 파라미터 에서 사용 가능
 - 기존의 것을 건들이지 않고 새로운 객체 만든다.
-  
+- ... 연산자 사용
+  1. 객체
+    - spread
+      ```js
+      const slime = {
+        name: '슬라임'
+      };
+      const cuteSlime = {
+        ...slime,
+        attribute: 'cute'
+      };
+      const purpleCuteSlime = {
+        ...cuteSlime,
+        color: 'purple'
+      };
+      console.log(slime);  //{name :'슬라임'}
+      console.log(cuteSlime); //{name : '슬라임', attribute : 'cute'}
+      console.log(purpleCuteSlime); //{name : '슬라임', attribute : 'cute', color :'purple'}
+      ```
+    - rest
+      ```js
+      const purpleCuteSlime = {
+        name: '슬라임',
+        attribute: 'cute',
+        color: 'purple'
+      };
+
+      const { color, ...rest } = purpleCuteSlime;
+      console.log(color); //purple
+      console.log(rest);  //{ name: '슬라임',attribute: 'cute'}
+
+      const { attribute, ...slime } = cuteSlime;
+      console.log(attribute); //cute
+      console.log(slime); //{name: '슬라임'}
+      ```
+  2. 배열
+    - spread
+      ```js
+      const animals = ['개', '고양이', '참새'];
+      const anotherAnimals = [...animals, '비둘기'];
+      console.log(animals);  //[개, 고양이, 참새]
+      console.log(anotherAnimals); // [개, 고양이 참새, 비둘기]
+      ```
+    - rest
+      ```js
+       const arr = [1,2,3,4,5,6];
+       const [one, ...rest1] = arr;
+       console.log(one);  //1
+       console.log(rest1); //[2,3,4,5,6]
+      ```
+  3. 함수 파라미터
+     - spread
+      ```js
+      function sum(...rest) {
+        return rest.reduce((acc, current) => acc + current, 0);
+     }
+
+     const numbers = [1, 2, 3, 4, 5, 6];
+     const result = sum(...numbers); 
+     console.log(result); //21
+      ```
+    - rest
+      ```js
+      function sum(...rest) {
+        return rest;
+      }
+
+      const result = sum(1, 2, 3, 4, 5, 6);
+      console.log(result); //[1,2,3,4,5,6]
+      ```
+       ```js
+      function sum(...rest) {
+        return rest.reduce((acc, current) => acc + current, 0);
+      }
+      const result = sum(1, 2, 3, 4, 5, 6);
+      console.log(result); //21
+      ```
 
 
