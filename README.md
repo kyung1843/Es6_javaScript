@@ -659,7 +659,7 @@ console.log(num); //1
 - 배열, 객체 , 함수 파라미터 에서 사용 가능
 - 기존의 것을 건들이지 않고 새로운 객체 만든다.
 - ... 연산자 사용
-  1. 객체
+  ### 객체
     - spread
       ```js
       const slime = {
@@ -693,7 +693,7 @@ console.log(num); //1
       console.log(attribute); //cute
       console.log(slime); //{name: '슬라임'}
       ```
-  2. 배열
+  ### 배열
     - spread
       ```js
       const animals = ['개', '고양이', '참새'];
@@ -708,7 +708,7 @@ console.log(num); //1
        console.log(one);  //1
        console.log(rest1); //[2,3,4,5,6]
       ```
-  3. 함수 파라미터
+  ### 함수 파라미터
     - spread
       ```js
       function sum(...rest) {
