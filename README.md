@@ -1,5 +1,7 @@
 # Es6_javaScript
 Es6 문법 이해
+참조
+[벨로퍼트](https://learnjs.vlpt.us/basics/)
 ## 변수와 상수
 ### 변수
   * var
@@ -132,6 +134,71 @@ switch ("iphone") {
     tran1(1,2);
     tran2(1,2);
     ```
+## 템플릿 리터럴
+[에브리 저장소 https://eblee-repo.tistory.com/38](https://eblee-repo.tistory.com/38)
+- (``)백틱으로 감사줌
+  ```js
+  `String text line1
+   string text line2`
+  ```
+- 런타임 시점에 문자열로 처리/변환
+1. 표현식 삽입법
+   ${}를 사용해 표현식 표기 가능(가독성 UP!)
+   ```js
+   let num1 = 10;
+   let num2 = 18;
+   let text = '샤브샤브';
+
+   console.log('나는 ${num1+num2} 이고, ${text}를 먹었당');
+   //나는 28살이고, 샤브샤브를 먹었당
+   ``` 
+3. Taged Templates
+   ```js
+   let person = 'Lee';
+   let age = 28;
+
+   let tag = function(strings, personExp, ageExp) {  
+     console.log(ageExp);  //28
+     console.log(personExp);  //Lee
+   
+     //Strings는 전달 문자열을 ${}을 기준으로 split
+     console.log(strings); // ['that ', ' is a ', '']
+
+     let str0 = strings[0];
+     let str1 = strings[1];
+     console.log("str0 : " + str0);  //that
+     console.log("str1 : " + str1);  //is a
+
+     let ageStr;
+     if(ageExp > 99) ageStr = 'centenaian';
+       else ageStr = 'youngster';
+       return str0 + personExp + str1 + ageStr;    //이 함수 내에서 template literal 반환 가능
+   };
+    
+   let output = tag`that ${person} is a ${age}`;
+   console.log(output);    //that Lee is a youngster
+   ```
+5. Multi-line Strings
+  - 리터럴 안에서 개행 해주면 적용됨
+  ```js
+  `String text line1
+   string text line2`
+  ```
+5. Nesting templates
+  - 템플릿 중첩 작성
+    ```js
+     => const classes  = `header ${isLargeScreen()? '' : `icon-${item.isCollapsed? 'expander' : 'collapser'}`}`;
+    ``` 
+6. Raw Strings
+  - 이스케이프 문자를 해석하지 않은 일반문자열
+  - String.raw 태그함수 사용해 입력한대로 출력 가능
+  ```js
+  let tag = function(strings) {
+    return strings.raw[0];
+  }
+  let str = tag`Hello\nWorld.`;
+  console.log(str);       //Hello\nWorld.
+  ``` 
 ## 객체
 - 객체 선언
 ```js
@@ -254,6 +321,113 @@ cat.say();  //'아옭'
   arr.length
   ```
 ### 내장함수
+- forEach
+  - for문 대체
+  ```js
+  const arr = [1,2,3];
+  arr.forEach(num => {console.log(num)});
+  //1~3
+  ```
+- map
+  - 배열안 원소 변환
+  ```js
+  const arr = [1,2,3];
+  const map = arr.map(n => n*n);
+  console.log(map);  //[1,4,9]
+  ```
+- indexOf
+  - 원하는 값의 인덱스 번호 찾기
+  ```js
+  const arr = [1,2,3];
+  let idx = arr.indexOf(2);  //1
+  ```
+- findIndex
+  - 원하는 값의 인덱스 번호 찾기
+  ```js
+  const arr = [1,2,3];
+  let idx = arr.findIndex(2);
+  ```
+  - 배열 안 원소가 배열/객체인 경우 사용X
+  ```js
+  const arr = [{id:1, text : '일', done : true}, {id:2, text : ' 이', done : true}];
+  let idx = arr.findIndex(arr=>arr.id === 1);
+  console.log(idx);  //0
+  ```
+- find
+  - 찾아낸 값 자체를 반환
+  ```js
+  const arr = [{id:1, text : '일', done : true}, {id:2, text : ' 이', done : true}];
+  let idx = arr.find(arr=>arr.id === 1);
+  console.log(idx);  // {id:1, text : '일', done : true}
+  ```
+- filter
+  - 조건 만족하는 값들만 모아 새로운 배열 반환
+  ```js
+  const arr = [{id:1, text : '일', done : true}, {id:2, text : ' 이', done : true}];
+  let newOne = arr.filter(arr=>arr.done === true);
+  console.log(newOne);  // [{id:1, text : '일', done : true}, {id:2, text : ' 이', done : true}]
+  ```
+- splice
+  - 특정항목 제거
+  ```js
+  const arr = [1,2,3];
+  arr.splice(0,1);
+  console.log(arr);  //[2,3]
+  arr.splice(idx, n);  //idx : 시작 인덱스 부터 , n : n개 제거
+  ```
+- slice
+  - 특정항목 제거, 기존의 배열 변형X
+  ```js
+    const arr = [1,2,3];
+    const arr2 = arr.slice(0,2);  //0부터 시작해서 2 전까지 자르겠다
+    console.log(arr2); // [3]
+    console.log(arr);  //[1,2,3]
+  ```
+- pop
+  - 배열 맨 마지막 값 추출&제거
+  ```js
+  const arr = [1,2,3];
+  const value = arr.pop();
+  console.log(value);  //3
+  console.log(arr);  //[1,2]
+  ```
+- shift
+   배열의 첫번째 값 추출&제거
+  ```js
+  const arr = [1,2,3];
+  const value = arr.shift();
+  console.log(value);  //1
+  console.log(arr);  //[2,3]
+  ```
+- unshift
+  - 배열 맨앞에 원소 추가
+  ```js
+   const arr = [1,2,3];
+   arr.unshift(4);
+   console.log(arr);  //[1,2,3,4]
+  ```
+- concat
+  - 여러개 배열 하나로 합치기, 기존 배열 변화X
+  ```js
+  arr1 = [1,2,3];
+  arr2 = [4,5,6];
+  const res = arr1.concat(arr2);
+  console.log(res) //[1,2,3,4,5,6]
+  console.log(arr1); //[1,2,3]
+  console.log(arr2); //[4,5,6]
+  ```
+- join
+  - 배열 안의 값을 문자열로 합치기
+  ```js
+  const arr = [1,2,3];
+  arr.join(' ,'); //'1, 2, 3'
+  ```
+- reduce함수
+  ```js
+  const arr = [1,2,3];
+  //param1 은 누적값
+  let sum = arr.reduce((param1,param2) => return 값, default값);
+  ```
 
 ## 반복문
 - for문
@@ -294,6 +468,73 @@ cat.say();  //'아옭'
   ```
 - break : 반복문 탈출
 - continue : ignore
+## 객체 생성자 vs 클래스
+### 객체 생성자
+```js
+function Animal(type, name, sound) {
+  this.type = type;
+  this.name = name;
+  this.sound = sound;
+  this.say = function() {
+    console.log(this.sound);
+  };
+}
+const dog = new Animal('개', '멍멍이', '멍멍');
+dog.say(); // 멍멍
+```
+#### 프로토타입
+- 같은 생성자 함수 사용시 특정함수/값 재사용 가능
+- 생성자 함수 아래 함수.prototype.이름 = 어쩌구;
+  ```js
+  Animal.prototype.value = 1;
+  console.log(dog.value); //1
 
+  dog.prototype.value  = 1 //Error
+  ```
+- 생성자 상속
+  ```js
+  Animal.prototype.say = function() {
+    console.log(this.sound);
+  };
+  
+  function bird(name, sound) {
+    //생성자.call(this, 필요로하는 파라미터);
+    Animal.call(this, '독수리', name, sound);
+  }
+  //추가적으로 prototype 을 공유
+  bird.prototype = Animal.prototype;
+
+  const eagle = new bird('독수리', '까악');
+  eagle.say();  //까악
+  ``` 
+### 클래스
+- 객체생성자로 구현한 코드를 조금더 깔끔하고 명확하게 구현가능
+```js
+class AnimalC {
+        constructor(type, name, sound){
+            this.type = type;
+            this.name = name;
+            this.sound = sound;
+        }
+
+        say(){
+            console.log(this.sound);
+        }
+    }
+
+    const birdy = new AnimalC('갈매기', '끼룩이', '끼룩끼룩');
+    birdy.say();  //끼룩기룩
+```
+- 클래스 상속 : extends 사용
+```js
+class Cat extends AnimalC{
+  constructor(name, sound){
+    //super() : 상속받은 클래스의 생성자
+    super('고냐미', name, sound);
+  }
+}
+const cat1 = new Cat('야옹이', '애옭애옭');
+cat1.say(); //애옭애옭
+```
 
 
