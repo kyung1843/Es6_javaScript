@@ -428,6 +428,12 @@ cat.say();  //'아옭'
   //param1 은 누적값
   let sum = arr.reduce((param1,param2) => return 값, default값);
   ```
+- includes
+  - 배열의 특정 값 있는지 여부
+  ```js
+  const arr = [1,2,3];
+  arr.includes(4); //false  
+  ```
 
 ## 반복문
 - for문
@@ -536,5 +542,122 @@ class Cat extends AnimalC{
 const cat1 = new Cat('야옹이', '애옭애옭');
 cat1.say(); //애옭애옭
 ```
+## Truthy / Falsy
+- falsy : null, undefined, 0, '', NaN
+- 함수 파라미터에 falsy한 값이 들어가게되면 오류 발생!
+- !파라미터 사용해 오류 회피
+```js
+//!falsy를 사용
+function some(!thing){
+ console.log(thing);
+}
+```
+## 단축 평가 논리 계산법 (&&, ||)
+```js
+const dog = {
+  name: '멍멍이'
+};
+const cat = {
+  name: ''
+};
+
+function getName1(animal) {
+  return animal && animal.name;
+}
+//값이 제대로 주어졌을 때만 name 을 조회하고, 나머지는 undefined 를 반환
+let name1 = getName1();
+console.log(name1); // undefined
+
+name1 = getName1(dog);
+console.log(name1); // 멍멍이
+
+//------------------------------------------------------------------------------
+
+function getName2(animal) {
+  const res = animal && animal.name;
+  return res || 'nothing';
+}
+const name2 = getName2(cat);
+console.log(name2); //'nothing'
+```
+## 함수 기본 파라미터
+- 파라미터 default값 지정
+```js
+function ex(param = 1){
+  return param;
+}
+//또는
+const ex = (param = 1) => param;
+
+console.log(ex()); //1
+console.log(ex(2)); //2
+```
+## 비구조화 할당(구조분해)
+- 배열/객체 안의 값 추출 후 선언
+  1. 배열
+  ```js
+  const arr = [1,2];
+  const [one,two] = arr;
+  console.log(one); //1
+  ```
+  2. 객체
+  ```js
+   const obj1 = {a:1, b:2};
+   const {a,b} = obj1;
+   console.log(a); //1
+  ```
+  3. 함수의 파라미터
+  ```js
+  const obj1 = {a:1, b:2};
+  function name ({a,b}){
+    console.log(a); //1
+  }
+  ```
+- 비구조화 할당시 기본값 설정
+  ```js
+  const obj1 = {a:1};
+  {a,b =2} = obj1
+  //또는 
+  function name ({a,b =2}){
+   console.log(a); //2
+   console.log(b); //2
+  }
+  //또는
+  const arr = [1,2,3];
+  const[one, two, three =4] = arr;
+  console.log(three); //4
+  ```
+- 비구조화 할당시 이름 변경
+```js
+const obj1 = {a:1};
+const num = obj1.a;
+console.log(num); //1
+```
+- 깊은 값 비구조화 할당
+  1. 비구조화 할당 두번
+   ```js
+    const exObj = {food :{info : {name : '탕후루', type : ['딸기', '귤', '샤인머스켓']}}, price : 3000};
+    const {name, type} = exObj.food.info;
+    const {price} = exObj;
+   
+    const extracted = {name, type, price};
+    //또는
+    const extracted = {name : name, type:type, price:price};
+    console.log(extracted); // {name: '탕후루', type: Array(3), price: 3000}
+   ```  
+  2. 한번에 모두 추출
+  ```js
+    const exObj = {food :{info : {name : '탕후루', type : ['딸기', '귤', '샤인머스켓']}}, price : 3000};
+    const {food:{info:{name, type}},price} = exObj;
+   
+    const extracted = {name, type, price};
+    //또는
+    const extracted = {name : name, type:type, price:price};
+    console.log(extracted); // {name: '탕후루', type: Array(3), price: 3000}
+   ```
+## spread vs rest
+- 배열, 객체 , 함수 파라미터 에서 사용 가능
+- 기존의 것을 건들이지 않고 새로운 객체 만든다.
+  
 
 
