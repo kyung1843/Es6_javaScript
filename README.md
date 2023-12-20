@@ -1,7 +1,10 @@
 # Es6_javaScript
 Es6 문법 이해
-참조
-[벨로퍼트](https://learnjs.vlpt.us/basics/)
+
+
+참조 :
+
+[https://learnjs.vlpt.us/basics/](https://learnjs.vlpt.us/basics/)
 ## 변수와 상수
 ### 변수
   * var
